@@ -10,10 +10,45 @@ import UpdateIcon from '@mui/icons-material/Update';
 import ReactDOM from 'react-dom';
 import { formatCurrency } from '../../utils/utils'
 import { useState } from 'react';
+import { formatDayMonthYear } from '../../utils/dateFomatter';
+import AllLesson from './Lesson/Lesson';
+import { parseData, calculateTotalTime } from '../../utils/parseChapter';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import TvIcon from '@mui/icons-material/Tv';
+import VerifiedIcon from '@mui/icons-material/Verified';
 Detail.propTypes = {
     course: PropTypes.object,
 };
+const styles1 = {
+    box:{
+        marginLeft: '20px'
+    },
+    typography: {
+        fontSize: '16px',
+        lineHeight: 1.5,
+        color: '#333',
+        marginTop: '10px',
+        marginBottom: '10px',
+        fontWeight:'bolder'
+    },
+    typographyItem: {
+        marginBottom: '15px',
+    },
+    icon: {
+        marginRight: '8px',
+        color: '#3f51b5',
+    },
+    iconAndTypo:{
+        display:'flex',
+        marginBottom:'10px'
+    }
+};
+
 const CartPortal = ({ course }) => {
+    const chapters = parseData(course.chapter);
+    const totalChapters = chapters.length;
+    const totalTime = chapters.reduce((total, chapter) => total + calculateTotalTime(chapter.lectures), 0);
     return ReactDOM.createPortal(
         <Box sx={styles.cart}>
             <Box sx={styles.boxImage}>
@@ -38,6 +73,27 @@ const CartPortal = ({ course }) => {
 
             <Box sx={{ textAlign: 'center', mt: 2 }}>
                 <Button variant="outlined" sx={styles.buyNowButton}>Buy now</Button>
+            </Box>
+            <Box sx= {styles1.box}>
+                <Typography sx={styles1.typography}>
+                    This course include:
+                </Typography>
+                <Box sx={styles1.iconAndTypo}> 
+                    <AccessTimeIcon sx={styles1.icon} />
+                    <Typography>{totalTime.toFixed(2)} hour on-demand video</Typography>
+                </Box>
+                <Box sx={styles1.iconAndTypo}>
+                    <MenuBookIcon sx={styles1.icon} />
+                    <Typography>{totalChapters} sections</Typography>
+                </Box>
+                <Box sx={styles1.iconAndTypo}>
+                    <TvIcon sx={styles1.icon} />
+                    <Typography>Access on mobile and TV</Typography>
+                </Box>
+                <Box sx={styles1.iconAndTypo}> 
+                    <VerifiedIcon sx={styles1.icon} />
+                    <Typography>Certificate of completion</Typography>
+                </Box>
             </Box>
         </Box>,
         document.body
@@ -96,7 +152,7 @@ function Detail({ course = {} }) {
                                 <Box>
                                     <UpdateIcon />
                                 </Box>
-                                <Box>Last updated: {course.date}</Box>
+                                <Box>Last updated: {formatDayMonthYear(course.createdAt)}</Box>
                             </Typography>
                         </Grid>
 
@@ -110,7 +166,7 @@ function Detail({ course = {} }) {
                         <Grid item sm={8} sx={styles.itemContents}>
                             <Typography variant="h5" sx={styles.learnTitle}>What you will learn</Typography>
                             <Grid container spacing={2}>
-                                {course.contents && course.contents.map((content, index) => (
+                                {course.contents && course.contents.split(';').map((content, index) => (
                                     <Grid item sm={6} key={index}>
                                         <Box sx={styles.learnContentBox}>
                                             <CheckSharpIcon sx={styles.checkIcon} />
@@ -126,10 +182,10 @@ function Detail({ course = {} }) {
                 <Container>
                     <Grid container>
                         <Grid item sm={8}>
-                            <Box sx={{ border: '1px solid black' }}>
-                                <Typography>Top companies offer this course to their employees</Typography>
-                                <Typography>This course was selected for our collection of top-rated courses trusted by businesses worldwide.
-                                    <span style={{ color: 'blue' , cursor:'pointer'}} onClick={handleClickOpen}>Learn more</span>
+                            <Box sx={{ border: '1px solid black', padding:'15px'}}>
+                                <Typography sx={{ fontWeight: 'bolder', fontSize: '20px' }}> Top companies offer this course to their employees</Typography>
+                                <Typography sx={{color:'grey'}}>This course was selected for our collection of top-rated courses trusted by businesses worldwide.
+                                    <span style={{ color: 'blue', cursor: 'pointer', marginLeft:'10px' }} onClick={handleClickOpen}>Learn more</span>
 
                                 </Typography>
                                 <Box display="flex" justifyContent="space-between" alignItems="center" mt={2}>
@@ -191,6 +247,9 @@ function Detail({ course = {} }) {
                             </Box>
                         </Grid>
                     </Grid>
+                </Container>
+                <Container>
+                    <AllLesson data={course.chapter} />
                 </Container>
             </Box>
 

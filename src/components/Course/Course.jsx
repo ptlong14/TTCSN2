@@ -20,13 +20,14 @@ const Course = ({ courses = [] }) => {
     return (
         <div>
             {courses.map(category => (
-                <div key={category.idCategory}>
+                <div key={category.categoryId}>
                     <Typography variant="h5" sx={styles.sectionTitle}>
-                        Top course in {category.category}
+                        Top course in {category.name}
                     </Typography>
                     <Slider {...settings}>
-                        {category.courses.map(course => (
-                            <div key={course.id}>
+                        {category.courseCategories.map(course => (
+                            <div key={course.courseId}>
+                              
                                 <Tooltip
                                     title={<RenderToolTipContent course={course}/>}
                                     placement="right"
@@ -43,7 +44,7 @@ const Course = ({ courses = [] }) => {
                                         arrow: { sx: { color: '#grey' } }
                                     }}
                                 >
-                                    <Card sx={styles.card} onClick={()=>handleCourseClick(course.id)}>
+                                    <Card sx={styles.card} onClick={() => handleCourseClick(course.courseId)}>
                                         <CardMedia
                                             component="img"
                                             sx={styles.cardMedia}

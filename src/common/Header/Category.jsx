@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { getAllItemCategories } from "../../apis/categories";
+//import { getAllItemCategories } from "../../apis/categories";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const CategoryItem = () => {
     const [categories, setCategories] = useState([]);
@@ -11,9 +12,10 @@ const CategoryItem = () => {
         setLoading(true);
         setError(null);
         try {
-            const res = await getAllItemCategories();
-            console.log('categories', res.data);
-            setCategories(res.data);
+            //const res = await getAllItemCategories();
+            const res = await axios.get('http://localhost:8080/api/v1/courses/categorycourse')
+            console.log('categories', res.data.data);
+            setCategories(res.data.data);
         } catch (error) {
             console.error('Error fetching categories:', error);
             setError("Failed to load categories");
@@ -24,6 +26,7 @@ const CategoryItem = () => {
 
     useEffect(() => {
         LoadAllCategories();
+        console.log('cate', categories)
     }, []);
 
     if (loading) {
@@ -39,8 +42,8 @@ const CategoryItem = () => {
             <p className="category-title">Categories</p>
             <div className="category-menu">
                 {categories.map((category) => (
-                    <p key={category.id} className="category-item">
-                        <Link to={`/category/${category.id}`} className="category-item">
+                    <p key={category.categoryId} className="category-item">
+                        <Link to={`/category/${category.categoryId}`} className="category-item">
                             {category.name}
                         </Link>
                     </p>

@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Tab, Tabs, Typography, Container } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import WishList from '../../components/User/WishList';
@@ -27,27 +27,37 @@ function TabPage() {
 
     return (
         <Box sx={{ minHeight: '70vh', backgroundColor: '#f4f4f4' }}>
-            <Box sx={{ backgroundColor: 'black', color: 'white', padding: '20px' }}>
-                <Typography variant="h4" sx={{ fontWeight: 'bold' }}>My Learning</Typography>
+            <Box sx={{
+                backgroundColor: '#333', 
+                color: 'white',
+                padding: '20px',
+                borderRadius: '8px',
+                boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)' 
+            }}>
+                <Typography variant="h4" sx={{ fontWeight: 'bold', textAlign: 'Left' }}>My Learning</Typography>
+                <Container sx={{ paddingTop: '20px' }}>
+                    <Tabs
+                        value={selectedTab}
+                        onChange={handleTabChange}
+                        aria-label="tabs"
+                        sx={{
+                            '.MuiTab-root': { textTransform: 'none', fontWeight: 'bolder', color: '#fff' },
+                            '.Mui-selected': {
+                                color: '#white',
+                                borderRadius: '4px',
+                            },
+                            '.MuiTabs-indicator': {
+                                color: '#fff', 
+                            },
+                        }}
+                    >
+                        {TABS.map((tab, index) => (
+                            <Tab key={index} label={tab.label} />
+                        ))}
+                    </Tabs>
+                </Container>
             </Box>
-
-            <Container sx={{ paddingTop: '20px' }}>
-                <Tabs
-                    value={selectedTab}
-                    onChange={handleTabChange}
-                    aria-label="tabs"
-                    centered
-                    sx={{
-                        '.MuiTab-root': { textTransform: 'none' },
-                    }}
-                >
-                    {TABS.map((tab, index) => (
-                        <Tab key={index} label={tab.label} />
-                    ))}
-                </Tabs>
-            </Container>
-
-            <Container sx={{ paddingTop: '20px' }}>
+            <Container sx={{ paddingTop: '20px', paddingBottom: '20px', backgroundColor: 'white', borderRadius: '8px' }}>
                 {TABS[selectedTab]?.content}
             </Container>
         </Box>
