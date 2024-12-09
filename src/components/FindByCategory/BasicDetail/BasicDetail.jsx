@@ -4,20 +4,21 @@ import { Divider, Paper, Stack, Typography } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import styles from './styles';
 BasicDetail.propTypes = {
-    course: PropTypes.object,
+    course: PropTypes.array,
+    detail: PropTypes.object,
 };
 
-function BasicDetail({ course = [] }) {
-    const totalStar = course.courses.reduce((sum, current) => sum + current.star, 0);
-    const averageStar = course.courses.length ? (totalStar / course.courses.length).toFixed(2) : 0;
-
+function BasicDetail({ course = [], detail = {} }) {
+    ////const totalStar = course.reduce((sum, current) => sum + current.star, 0);
+    // const averageStar = course.length ? (totalStar / course.courses.length).toFixed(2) : 0;
+    const averageStar = course.reduce((sum, course) => sum + course.star, 0) / course.length;
     return (
-        <div  style={styles.paper}>
+        <div style={styles.paper}>
             <Typography variant="h3" style={styles.title}>
-                {course.category} Courses
+                {detail.name} Courses
             </Typography>
             <Typography variant="body1" style={styles.description}>
-                {course.description}
+                {detail.description}
             </Typography>
             <Stack
                 direction="row"
@@ -27,13 +28,13 @@ function BasicDetail({ course = [] }) {
             >
                 <Paper style={styles.item}>
                     <Typography style={styles.titleItem}>Number of courses</Typography>
-                    <Typography style={styles.titleContent}>{course.courses.length}</Typography>
+                    <Typography style={styles.titleContent}>{course.length}</Typography>
                 </Paper>
                 <Paper style={styles.item}>
                     <Typography style={styles.titleItem}>Average courses rating</Typography>
-                    <Stack direction="row"  spacing={2}>
-                        <Typography style={styles.titleContent}>{averageStar}</Typography>
-                        <StarIcon style={styles.star} /> 
+                    <Stack direction="row" spacing={2}>
+                        <Typography style={styles.titleContent}>{averageStar.toFixed(2)}</Typography>
+                        <StarIcon style={styles.star} />
                     </Stack>
                 </Paper>
             </Stack>

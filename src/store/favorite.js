@@ -14,13 +14,10 @@ const courseSlice = createSlice({
         },
         toggleFavorite(state, action) {
             const course = action.payload;
-            // Kiểm tra xem khóa học đã có trong danh sách yêu thích chưa
-            const index = state.favorites.findIndex(fav => fav.id === course.id);
+            const index = state.favorites.findIndex(fav => fav.courseId === course.courseId);
             if (index === -1) {
-                // Nếu chưa có, thêm khóa học vào danh sách yêu thích
                 state.favorites.push(course);
             } else {
-                // Nếu đã có, xóa khóa học khỏi danh sách yêu thích
                 state.favorites.splice(index, 1);
             }
         },

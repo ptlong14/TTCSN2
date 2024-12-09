@@ -8,6 +8,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import styles from './stylesRenderToolTip';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleFavorite } from '../../../store/favorite'
+import { formatMonthYear } from '../.././../utils/dateFomatter'
 RenderToolTipContent.propTypes = {
     course: PropTypes.object,
 };
@@ -21,7 +22,7 @@ const DotIcon = styled(FiberManualRecordSharpIcon)(({ theme }) => ({
 function RenderToolTipContent({ course = {} }) {
     const dispatch = useDispatch();
     const favorites = useSelector(state => state.courses.favorites);
-    const isFavorite = favorites.some(fav => fav.id === course.id);
+    const isFavorite = favorites.some(fav => fav.courseId === course.courseId);
     const handleToggleFavorite = () => {
         dispatch(toggleFavorite(course));
     };
@@ -31,7 +32,7 @@ function RenderToolTipContent({ course = {} }) {
             <Typography variant="subtitle1" sx={styles.courseName}>{course.name}</Typography>
             <Typography>
                 <span style={styles.typo1}>Updated: </span>
-                <span style={styles.typo2}>{course.date}</span>
+                <span style={styles.typo2}>{formatMonthYear(course.createdAt)}</span>
             </Typography>
             <Typography variant="body2" sx={styles.hour}>
                 {course.hour} total hours
@@ -40,7 +41,7 @@ function RenderToolTipContent({ course = {} }) {
             </Typography>
             <Typography variant='body2' sx={{ fontSize: '16px' }}>{course.description}</Typography>
             <ul>
-                {course.contents.slice(0, 3).map((item, index) => (
+                {course.contents.split(";").slice(0, 3).map((item, index) => (
                     <li key={index}>
                         <CheckSharpIcon sx={styles.checkIcon}></CheckSharpIcon>
                         <Typography variant="body2" sx={{ fontSize: '16px' }}>{item}</Typography></li>
@@ -48,7 +49,7 @@ function RenderToolTipContent({ course = {} }) {
             </ul>
 
             <Box sx={styles.box}>
-                <Button sx={styles.cart}>Add to cart</Button>
+                <Button sx={styles.cart} style={{ height: '50px' }}>Add to cart</Button>
                 <Box onClick={() => handleToggleFavorite(course.id)} sx={styles.circle}>
                     {isFavorite ? (
                         <FavoriteIcon sx={{ ...styles.heart, transform: 'scale(1.1)' }} />

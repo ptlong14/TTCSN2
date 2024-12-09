@@ -53,7 +53,7 @@ const styles = {
     star: {
         marginTop: '15px',
         color: 'orange',
-        fontSize: '14px',
+        fontSize: '19px',
         fontWeight: 'bolder',
         display: 'flex',
     },

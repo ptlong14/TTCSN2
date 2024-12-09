@@ -8,6 +8,7 @@ import RenderStar from "../../Course/RenderStar/RenderStar";
 import { formatCurrency } from "../../../utils/utils";
 import { sortCourses } from "../../../utils/sortedDate";
 import { useNavigate } from "react-router-dom";
+import { formatMonthYear } from "../../../utils/dateFomatter";
 NewestCources.propTypes = {
     course: PropTypes.array,
 };
@@ -22,7 +23,7 @@ function NewestCources({ course = [] }) {
         <Container>
             <Slider {...settings}>
                 {sortedCourse.map(course => (
-                    <div key={course.id}>
+                    <div key={course.courseId}>
                         <Tooltip
                             title={<RenderToolTipContent course={course} />}
                             placement="right"
@@ -39,7 +40,7 @@ function NewestCources({ course = [] }) {
                                 arrow: { sx: { color: '#grey' } }
                             }}
                         >
-                            <Card sx={{ maxWidth: '100%', height: 350, margin: 1 }} onClick={() => handleCourseClick(course.id)}>
+                            <Card sx={{ maxWidth: '100%', height: 350, margin: 1 }} onClick={() => handleCourseClick(course.courseId)}>
                                 <CardMedia
                                     component="img"
                                     sx={styles.cardMedia}
@@ -54,7 +55,7 @@ function NewestCources({ course = [] }) {
                                         color: 'green',
                                         fontSize: '0.875rem',
                                     }}>
-                                        Updated at: {course.date}</Typography>
+                                        Updated at: {formatMonthYear(course.createdAt)}</Typography>
                                     <Typography variant='body2' sx={styles.courseAuthor}>
                                         {course.author}
                                     </Typography>

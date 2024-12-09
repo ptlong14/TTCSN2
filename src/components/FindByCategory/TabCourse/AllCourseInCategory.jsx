@@ -23,7 +23,7 @@ function MostPopular({ course = [] }) {
         <Container>
             <Slider {...settings}>
                 {course.map(course => (
-                    <div key={course.id}>
+                    <div key={course.courseId}>
                         <Tooltip
                             title={<RenderToolTipContent course={course} />}
                             placement="right"
@@ -40,7 +40,7 @@ function MostPopular({ course = [] }) {
                                 arrow: { sx: { color: '#grey' } }
                             }}
                         >
-                            <Card sx={{ maxWidth: '100%', height: 350, margin: 1 }} onClick={() => handleCourseClick(course.id)} >
+                            <Card sx={{ maxWidth: '100%', height: 350, margin: 1 }} onClick={() => handleCourseClick(course.courseId)} >
                                 <CardMedia
                                     component="img"
                                     sx={styles.cardMedia}

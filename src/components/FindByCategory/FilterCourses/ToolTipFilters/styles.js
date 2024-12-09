@@ -1,13 +1,9 @@
 
-
 const styles = {
-    courseName: {
-        fontWeight: 'bold',
-        fontSize: '1.2rem',
-    },
-    hour: {
-        color: '#757575',
-        fontSize: '0.875rem',
+    title: {
+        fontWeight: 'bolder',
+        fontSize: '18px',
+        padding: '10px'
     },
     checkIcon: {
         marginRight: '8px',
@@ -17,9 +13,8 @@ const styles = {
         padding: '18px',
         color: '#fff',
         width: '70%',
-        fontWeight: 'bold',
-        
-
+        height: '50px',
+        fontWeight: 'bold'
     },
     heart: {
         fontSize: '1.8rem',
@@ -36,18 +31,6 @@ const styles = {
         justifyContent: 'center',
         cursor: 'pointer',
         marginLeft: '1.5rem',
-    },
-    typo1: {
-        color: '#19C72B', fontSize: '14px'
-    },
-    typo2: {
-        color: 'darkgreen', fontSize: '14px'
-    },
-    box: {
-        display: 'flex',
-        marginBottom: '6px',
-        padding: '10px'
     }
-
 }
 export default styles

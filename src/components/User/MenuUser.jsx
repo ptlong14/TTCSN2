@@ -5,21 +5,20 @@ import MenuItem from '@mui/material/MenuItem';
 import { deepOrange } from '@mui/material/colors';
 import { Grid, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+
 function MenuUser() {
     const [anchorEl, setAnchorEl] = useState(null);
-    const [isHovered, setIsHovered] = useState(false);
     const navigate = useNavigate();
 
     const handleMouseEnter = (event) => {
         setAnchorEl(event.currentTarget);
-        setIsHovered(true);
     };
+
     const handleMouseLeave = () => {
-        setIsHovered(false);
         setAnchorEl(null);
     };
+
     const handleMenuItemClick = (path) => {
-        setIsHovered(false);
         navigate(path);
         setAnchorEl(null);
     };
@@ -40,7 +39,7 @@ function MenuUser() {
             </Avatar>
             <Menu
                 anchorEl={anchorEl}
-                open={isHovered}
+                open={Boolean(anchorEl)}
                 onClose={handleMouseLeave}
                 anchorOrigin={{
                     vertical: 'bottom',
@@ -50,19 +49,22 @@ function MenuUser() {
                     vertical: 'top',
                     horizontal: 'center',
                 }}
+                MenuListProps={{
+                    onMouseLeave: handleMouseLeave,
+                }}
             >
-
-                <Grid container>
-                    <Grid item ><Avatar>TL</Avatar></Grid>
-                    <Grid item>
-                        <Typography>Nguyễn</Typography>
-                        <Typography>linh1105@gmail.com</Typography>
+                <Grid container alignItems="center" padding={1}>
+                    <Grid item><Avatar>TL</Avatar></Grid>
+                    <Grid item marginLeft={1}>
+                        <Typography>Thanh Long</Typography>
+                        <Typography>long@gmail.com</Typography>
                     </Grid>
-
                 </Grid>
+                <MenuItem onClick={() => handleMenuItemClick("/my-profile")}>Public profile</MenuItem>
                 <MenuItem onClick={() => handleMenuItemClick('/my-course/my-learning')}>My learning</MenuItem>
+                <MenuItem onClick={()=>handleMenuItemClick("/my-profile")}>My cart </MenuItem>
                 <MenuItem onClick={() => handleMenuItemClick('/my-course/my-wishlist')}>Wishlist</MenuItem>
-                <MenuItem onClick={handleMouseLeave}>Account settings</MenuItem>
+                <MenuItem>Purchase history</MenuItem>
                 <MenuItem onClick={handleMouseLeave}>Log out</MenuItem>
             </Menu>
         </div>

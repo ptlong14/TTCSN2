@@ -7,28 +7,29 @@ import Register from './pages/Register/Register'
 import Categories from './pages/Categories/Categories'
 import CourseDetailPage from './pages/CourseDetail/Detail'
 import TabPage from './pages/MyCourse/TabPage'
+import MyProfile from './components/User/MyProfile'
 
 
 function App() {
 
   const router = useRoutes([
     {
-      path:"/",
-      element: <MainLayout/>,
-      children:[
+      path: "/",
+      element: <MainLayout />,
+      children: [
         {
-          path:'',
-          element:<Home/>
+          path: '',
+          element: <Home />
         },
       ],
     },
     {
       path: '/signIn',
-      element:<Login/>
+      element: <Login />
     },
     {
-      path:'/signUp',
-      element:<Register/>
+      path: '/signUp',
+      element: <Register />
     },
     {
       path: "/",
@@ -59,11 +60,23 @@ function App() {
           element: <TabPage />
         },
       ]
+    },
+    {
+      path: '/',
+      element: <MainLayout />,
+      children: [
+        {
+          path: '/my-profile',
+          element:<MyProfile/>
+        }
+
+      ]
     }
+
   ])
   return (
     <>
-    {router}
+      {router}
     </>
   )
 }

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Container, Typography } from "@mui/material";
-import { getAllItemCourse } from "../../apis/course";
+//import { getAllItemCourse } from "../../apis/course";
 import Course from "../Course/Course";
 import SkeletonList from "./CourseItemSkeleton";
 import { useDispatch, useSelector } from "react-redux";
 import { setCourses } from "../../store/favorite";
+import axios from "axios";
 
 const CourseItem = () => {
     const [loading, setLoading] = useState(true);
@@ -16,9 +17,11 @@ const CourseItem = () => {
         setLoading(true);
         setError(null);
         try {
-            const res = await getAllItemCourse()
-            console.log(res)
-            dispatch(setCourses( res.data));
+            //const res = await getAllItemCourse()
+            const res = await axios.get('http://localhost:8080/api/v1/courses/categorycourse')
+            console.log('res',res)
+            dispatch(setCourses( res.data.data));
+            console.log('course:', courses)
         } catch (error) {
             console.error('Error fetching courses:', error);
             setError("Failed to load courses");
